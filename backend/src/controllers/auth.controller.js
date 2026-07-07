@@ -1,9 +1,15 @@
 import User from "../models/user.model.js";
-import { hashPassword } from "../utility/auth.js";
+import { generateToken, hashPassword } from "../utility/auth.js";
 
 export const signup = async (req, res) => {
-  try {console.log(req.body);
+  try {
     const { fullName, email, password } = req.body;
+
+    if (!fullName || !email || !password) {
+      return res.status(400).send({
+        message: "All fields are required"
+      });
+    }
 
     if (password.length < 6) {
       return res.status(400).send({
@@ -12,7 +18,7 @@ export const signup = async (req, res) => {
     }
 
     const user = await User.findOne({ email });
-    if (email) {
+    if (user) {
       return res.status(400).send({
         message: "Email already exists"
       });
