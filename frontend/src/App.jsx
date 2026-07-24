@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/Homepage";
@@ -8,6 +9,11 @@ import SettingsPage from "./pages/SettingsPage";
 import ProfilePage from "./pages/ProfilePage";
 
 const App = () => {
+  const user = useSelector(state => {
+    console.log(state.auth.user);
+    return state.auth.user;
+  });
+  
   return (
     <div>
       <Navbar />
