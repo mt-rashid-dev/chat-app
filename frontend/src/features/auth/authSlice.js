@@ -1,13 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+import { axiosInstance } from "../../utils/axiosInstance";
+
+export const checkAuth = createAsyncThunk("auth/checkAuth", async () => {
+  const res = await axiosInstance.get("/auth/check");
+  return {
+    fullName: res.data.fullName,
+    email: res.data.email,
+    profilePic: res.data.profilePic,
+  };
+});
 
 export const authSlice = createSlice({
   name: "auth",
   initialState: {
-    user: {
-      fullName: "",
-      email: "",
-      profilePic: ""
-    },
+    user: null,
     isSigningUp: false,
     isLoggingIn: false,
     isUpdatingProfile: false,
@@ -15,21 +22,28 @@ export const authSlice = createSlice({
   },
   reducers: {
     setUser: (state, action) => {
-      state.user.fullName = action.payload.fullName;
-      state.user.email = action.payload.email;
-      state.user.profilePic = action.payload.profilePic;
-    },
-    setIsCheckingAuth: (state, action) => {
-      state.isCheckingAuth = action.payload;
+      state.user = action.payload;
     },
     resetUser: state => {
-      state.user.fullName = "";
-      state.user.email = "";
-      state.user.profilePic = "";
+      state.user = null;
     }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(checkAuth.pending, (state) => {
+        state.isCheckingAuth = true;
+      })
+      .addCase(checkAuth.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isCheckingAuth = false;
+      })
+      .addCase(checkAuth.rejected, (state) => {
+        state.user = null;
+        state.isCheckingAuth = false;
+      })
   }
 });
 
-export const { setUser, isSigningUp, isLoggingIn, isUpdatingProfile, setIsCheckingAuth, resetUser } = authSlice.actions;
+export const { setUser, resetUser } = authSlice.actions;
 
 export default authSlice.reducer;
