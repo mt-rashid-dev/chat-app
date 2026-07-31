@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { LuEye, LuEyeOff, LuLock, LuMail, LuMessageSquare, LuUser } from "react-icons/lu";
 
 import SquarePattern from "../components/SquarePattern";
@@ -90,7 +89,7 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="min-h-scrren grid lg:grid-cols-2">
+    <div className="min-h-scrren grid lg:grid-cols-2 pt-16">
       {/* Left side */}
       <div className="flex flex-col justify-center items-center p-6 sm:p-12">
         <div className="max-w-md space-y-8">
@@ -155,7 +154,7 @@ const SignUpPage = () => {
                 <input
                   type={showPassword ? "text" : "password"}
                   className="input input-bordered w-full px-10 pb-1"
-                  placeholder="*******"
+                  placeholder="••••••••"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                 />

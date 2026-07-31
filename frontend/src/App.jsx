@@ -1,3 +1,4 @@
+import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
