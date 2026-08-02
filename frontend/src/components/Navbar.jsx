@@ -23,7 +23,9 @@ const Navbar = () => {
       dispatch(resetUser());
       navigate(value);
     })
-    .catch(error => {});
+    .catch(error => {
+      notifyError(error?.response?.data?.message);
+    });
   };
 
   return (
