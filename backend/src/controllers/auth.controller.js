@@ -43,7 +43,8 @@ export const signup = async (req, res) => {
         _id: newUser._id,
         fullName: newUser.fullName,
         email: newUser.email,
-        profilePic: newUser.profilePic
+        profilePic: newUser.profilePic,
+        createdAt: user.createdAt
       });
     } else {
       res.status(400).send({
@@ -78,7 +79,8 @@ export const login = async (req, res) => {
       _id: user._id,
       fullName: user.fullName,
       email: user.email,
-      profilePic: user.profilePic
+      profilePic: user.profilePic,
+      createdAt: user.createdAt
     });
   } catch (error) {
     console.log(`Error in login controller: ${error}`);
@@ -106,13 +108,18 @@ export const updateProfile = async (req, res) => {
   try {
     const { profilePic } = req.body;
     const userId = req.user._id;
+    const prevImgPublicId = req.user.imagePublicId;
 
     if (!profilePic) {
-      res.status(400).send({ message: "Profile picture is required" });
+      return res.status(400).send({ message: "Profile picture is required" });
+    }
+
+    if (prevImgPublicId) {
+      await cloudinary.uploader.destroy(prevImgPublicId);
     }
 
     const uploadResponse = await cloudinary.uploader.upload(profilePic);
-    const updatedUser = await User.findByIdAndUpdate(userId, { profilePic: uploadResponse.secure_url }, { new: true, select: "-password" });
+    const updatedUser = await User.findByIdAndUpdate(userId, { profilePic: uploadResponse.secure_url, imagePublicId: uploadResponse.public_id }, { returnDocument: "after", select: "-password" });
     res.status(200).send(updatedUser);
   } catch (error) {
     console.log(`Error in updateProfile controller: ${error}`);

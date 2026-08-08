@@ -8,6 +8,7 @@ export const checkAuth = createAsyncThunk("auth/checkAuth", async () => {
     fullName: res.data.fullName,
     email: res.data.email,
     profilePic: res.data.profilePic,
+    createdAt: res.data.createdAt
   };
 });
 
