@@ -96,7 +96,7 @@ const SignUpPage = () => {
           {/* Heading */}
           <div className="text-center mb-8">
             <div className="flex flex-col items-center gap-2 group">
-              <div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+              <div className="size-12 rounded-xl bg-purple-600/10 flex items-center justify-center group-hover:bg-purple-600/20 transition-colors">
                 <LuMessageSquare className="size-6 text-primary"/>
               </div>
               <h1>Create Account</h1>
@@ -169,7 +169,7 @@ const SignUpPage = () => {
               {passwordError && <p className="pl-1 text-red-400">{passwordError}</p>}
             </div>
 
-            <button type="submit" className="btn btn-primary w-full" disabled={isLoading}>
+            <button type="submit" className="btn bg-purple-600 hover:bg-purple-500 text-gray-100 w-full" disabled={isLoading}>
               {isLoading ? (
                 <span className="loading loading-spinner loading-xs"></span>
               ) : (
@@ -181,7 +181,7 @@ const SignUpPage = () => {
           <div className="text-center">
             <p className="text-base-content/60">
               Already have an account?&nbsp;
-              <Link to="/login" className="link link-primary">
+              <Link to="/login" className="link text-purple-600 hover:text-purple-500">
                 Sign In
               </Link>
             </p>
