@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "./features/auth/authSlice";
 
 import Navbar from "./components/Navbar";
-import HomePage from "./pages/Homepage";
+import HomePage from "./pages/HomePage";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import SettingsPage from "./pages/SettingsPage";

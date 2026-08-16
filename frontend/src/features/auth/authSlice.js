@@ -16,6 +16,7 @@ export const authSlice = createSlice({
   name: "auth",
   initialState: {
     user: null,
+    onlineUsers: [],
     isCheckingAuth: true
   },
   reducers: {

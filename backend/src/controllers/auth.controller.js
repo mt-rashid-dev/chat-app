@@ -44,7 +44,7 @@ export const signup = async (req, res) => {
         fullName: newUser.fullName,
         email: newUser.email,
         profilePic: newUser.profilePic,
-        createdAt: user.createdAt
+        createdAt: newUser.createdAt
       });
     } else {
       res.status(400).send({

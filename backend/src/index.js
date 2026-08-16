@@ -23,7 +23,7 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
-app.use("/api/message", messageRoutes);
+app.use("/api/messages", messageRoutes);
 
 app.listen(port, () => {
   console.log(`Backend app listening on port ${port}`);
