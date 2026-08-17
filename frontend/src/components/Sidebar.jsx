@@ -4,6 +4,7 @@ import { LuUsers } from "react-icons/lu";
 
 import { axiosInstance } from "../utils/axiosInstance";
 import { setSelectedUser } from "../features/chat/chatSlice";
+import SidebarSkeleton from "./SidebarSkeleton";
 
 const Sidebar = () => {
   const onlineUsers = useSelector(state => state.auth.onlineUsers);
@@ -18,6 +19,7 @@ const Sidebar = () => {
   }, []);
 
   const getUsers = () => {
+    setIsLoading(true);
     axiosInstance.get("/messages/users")
     .then(res => {
       if (showOnlineOnly) {
@@ -29,7 +31,10 @@ const Sidebar = () => {
     .catch(error => {
       console.log(error);
     })
+    .finally(() => setIsLoading(false));
   };
+
+  if (isLoading) return <SidebarSkeleton />;
 
   return (
     <aside className="h-full w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200">
