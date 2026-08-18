@@ -8,7 +8,10 @@ import SidebarSkeleton from "./SidebarSkeleton";
 
 const Sidebar = () => {
   const onlineUsers = useSelector(state => state.auth.onlineUsers);
-  const selectedUser = useSelector(state => state.chat.selectedUser);
+  const selectedUser = useSelector(state => {
+    // console.log(state.chat.selectedUser);
+    return state.chat.selectedUser;
+  });
   const dispatch = useDispatch();
   const [showOnlineOnly, setShowOnlineOnly] = useState(false);
   const [filteredUsers, setFilteredUsers] = useState([]);

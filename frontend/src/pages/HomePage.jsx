@@ -1,9 +1,11 @@
+import { useSelector } from "react-redux";
+
 import ChatContainer from "../components/ChatContainer";
 import NoChatSelected from "../components/NoChatSelected";
 import Sidebar from "../components/Sidebar";
 
 const HomePage = () => {
-  const selectedUser = null;
+  const selectedUser = useSelector(state => state.chat.selectedUser);
 
   return (
     <div className="h-screen bg-base-200">
