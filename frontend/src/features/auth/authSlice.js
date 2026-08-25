@@ -5,6 +5,7 @@ import { axiosInstance } from "../../utils/axiosInstance";
 export const checkAuth = createAsyncThunk("auth/checkAuth", async () => {
   const res = await axiosInstance.get("/auth/check");
   return {
+    _id: res.data._id,
     fullName: res.data.fullName,
     email: res.data.email,
     profilePic: res.data.profilePic,
