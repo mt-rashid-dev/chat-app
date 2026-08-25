@@ -48,7 +48,7 @@ const MessageInput = () => {
 
     axiosInstance.post(`/messages/send/${selectedUser._id}`, messageData)
     .then(res => {
-      dispatch(res.data);
+      dispatch(addMessage(res.data));
       // Clear form
       setText("");
       setImagePreview(null);
