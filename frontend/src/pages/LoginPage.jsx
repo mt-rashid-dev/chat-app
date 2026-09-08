@@ -8,6 +8,7 @@ import SquarePattern from "../components/SquarePattern";
 import { axiosInstance } from "../utils/axiosInstance";
 import { sleep } from "../utils/sleep";
 import { setUser } from "../features/auth/authSlice";
+import { connectSocket } from "../utils/socket";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -39,6 +40,7 @@ const LoginPage = () => {
       const value = await sleep(3000, false);
       setIsLoading(value)
       dispatch(setUser(res.data));
+      connectSocket(res.data._id);
       navigate("/");
     })
     .catch(async error => {

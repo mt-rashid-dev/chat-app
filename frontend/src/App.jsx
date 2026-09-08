@@ -3,7 +3,8 @@ import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { checkAuth } from "./features/auth/authSlice";
+import { checkAuth, setOnlineUsers } from "./features/auth/authSlice";
+import { socket, disconnectSocket } from "./utils/socket";
 
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
@@ -18,8 +19,19 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const handleOnlineUsers = (userIds) => {
+      console.log(userIds);
+      dispatch(setOnlineUsers(userIds));
+    };
+
+    socket.on("getOnlineUsers", handleOnlineUsers);
     dispatch(checkAuth());
-  }, []);
+
+    return () => {
+      socket.off("getOnlineUsers", handleOnlineUsers);
+      disconnectSocket();
+    };
+  }, [dispatch]);
 
   if (isCheckingAuth && !user) {
     return (

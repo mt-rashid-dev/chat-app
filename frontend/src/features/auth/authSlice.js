@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { axiosInstance } from "../../utils/axiosInstance";
+import { connectSocket } from "../../utils/socket";
 
 export const checkAuth = createAsyncThunk("auth/checkAuth", async () => {
   const res = await axiosInstance.get("/auth/check");
@@ -24,6 +25,9 @@ export const authSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
     },
+    setOnlineUsers: (state, action) => {
+      state.onlineUsers = action.payload;
+    },
     resetUser: state => {
       state.user = null;
     }
@@ -36,6 +40,7 @@ export const authSlice = createSlice({
       .addCase(checkAuth.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isCheckingAuth = false;
+        connectSocket(action.payload._id);
       })
       .addCase(checkAuth.rejected, (state) => {
         state.user = null;
@@ -44,6 +49,6 @@ export const authSlice = createSlice({
   }
 });
 
-export const { setUser, resetUser } = authSlice.actions;
+export const { setUser, setOnlineUsers, resetUser } = authSlice.actions;
 
 export default authSlice.reducer;

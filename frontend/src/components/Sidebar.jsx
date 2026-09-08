@@ -7,7 +7,10 @@ import { setSelectedUser } from "../features/chat/chatSlice";
 import SidebarSkeleton from "./SidebarSkeleton";
 
 const Sidebar = () => {
-  const onlineUsers = useSelector(state => state.auth.onlineUsers);
+  const onlineUsers = useSelector(state => {
+    // console.log(state.auth.onlineUsers);
+    return state.auth.onlineUsers;
+  });
   const selectedUser = useSelector(state => {
     // console.log(state.chat.selectedUser);
     return state.chat.selectedUser;

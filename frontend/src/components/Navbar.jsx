@@ -6,6 +6,7 @@ import { LuMessageSquare, LuSettings, LuUser, LuLogOut } from "react-icons/lu";
 import { axiosInstance } from "../utils/axiosInstance";
 import { resetUser } from "../features/auth/authSlice";
 import { sleep } from "../utils/sleep";
+import { disconnectSocket } from "../utils/socket";
 
 const Navbar = () => {
   const user = useSelector(state => state.auth.user);
@@ -21,6 +22,7 @@ const Navbar = () => {
       notifySuccess("Logged out successfully");
       const value = await sleep(3000, "/login");
       dispatch(resetUser());
+      disconnectSocket();
       navigate(value);
     })
     .catch(error => {
