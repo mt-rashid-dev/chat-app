@@ -5,8 +5,9 @@ import { ToastContainer, toast } from "react-toastify";
 import ChatHeader from "./ChatHeader";
 import MessageInput from "./MessageInput";
 import { axiosInstance } from "../utils/axiosInstance";
-import { setMessages } from "../features/chat/chatSlice";
+import { addMessage, setMessages } from "../features/chat/chatSlice";
 import MessageSkeleton from "./MessageSkeleton";
+import { socket } from "../utils/socket";
 
 const ChatContainer = () => {
   const selectedUser = useSelector(state => state.chat.selectedUser);
@@ -26,6 +27,16 @@ const ChatContainer = () => {
 
   useEffect(() => {
     getMessages();
+
+    const handleNewMessage = (newMessage) => {
+      if (newMessage.senderId === selectedUser._id) {
+        dispatch(addMessage(newMessage));
+      }
+    };
+
+    socket.on("newMessage", handleNewMessage);
+
+    return () => socket.off("newMessage", handleNewMessage);
   }, [selectedUser]);
 
   const getMessages = () => {

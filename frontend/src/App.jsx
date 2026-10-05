@@ -20,7 +20,7 @@ const App = () => {
 
   useEffect(() => {
     const handleOnlineUsers = (userIds) => {
-      console.log(userIds);
+      // console.log(userIds);
       dispatch(setOnlineUsers(userIds));
     };
 
